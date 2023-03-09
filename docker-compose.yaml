@@ -1,0 +1,32 @@
+version: '3.1'
+services:
+  django-tutorial:
+    container_name: el-bueno
+    image: githubemail1asir/el-bueno:latest
+    restart: always
+    environment:
+      ALLOWED_HOSTS: "*"
+      DJANGODB_HOST: mariadb_el-bueno
+      DJANGODB_USER: django
+      DJANGODB_PASS: django
+      DJANGODB: django
+      DJANGO_SUPERUSER_PASSWORD: admin
+      DJANGO_SUPERUSER_USERNAME: admin
+      DJANGO_SUPERUSER_EMAIL: admin@gmail.com
+    ports:
+      - 9993:9003
+    depends_on:
+      - db_django
+  db_django:
+    container_name: mariadb_el-bueno
+    image: mariadb:10.5
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: root
+      MARIADB_DATABASE: django
+      MARIADB_USER: django
+      MARIADB_PASSWORD: django
+    volumes:
+      - mariadb_el-bueno:/var/lib/mysql
+volumes:
+  mariadb_el-bueno:
